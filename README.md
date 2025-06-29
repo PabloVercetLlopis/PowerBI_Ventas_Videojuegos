@@ -61,15 +61,21 @@ El dashboard contiene diferentes visualizaciones creadas en Power BI, entre ella
 PowerBI_Ventas_Videojuegos/
 │
 ├─ Data/
+
 │ └─ Ventas+Videojuegos.xlsx
 │
 ├─ Powerbi/
+
 │ └─ Proyecto1_Ventas_Videojuegos.pbix
 │
+
 ├─ power_query/
+
 │ └─ transformaciones
+
 │
 ├─ Visualizaciones/
+
 │ └─ Captura_Trabajo_Videojuegos.PNG
 │
 └─ README.md
