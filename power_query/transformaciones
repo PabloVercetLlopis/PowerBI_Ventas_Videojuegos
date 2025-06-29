@@ -1,0 +1,15 @@
+let
+    Origen = Excel.Workbook(File.Contents("C:\0-Pablo\PABLO\Pablo\Desktop\Cursos\Power BI\Proyecto1_Ventas_Videojuegos\Ventas+Videojuegos.xlsx"), null, true),
+    #"Ventas Videojuegos_Sheet" = Origen{[Item="Ventas Videojuegos",Kind="Sheet"]}[Data],
+    #"Encabezados promovidos" = Table.PromoteHeaders(#"Ventas Videojuegos_Sheet", [PromoteAllScalars=true]),
+    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Nombre", type text}, {"Plataforma", type text}, {"Año", type text}, {"Genero", type text}, {"Editorial", type text}, {"Ventas NA", type number}, {"Ventas EU", type number}, {"Ventas JP", type number}, {"Ventas Otros", type number}, {"Ventas Global", type number}}),
+    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Ventas Global"}),
+    #"Columna de anulación de dinamización" = Table.UnpivotOtherColumns(#"Columnas quitadas", {"Nombre", "Plataforma", "Año", "Genero", "Editorial"}, "Atributo", "Valor"),
+    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columna de anulación de dinamización",{{"Atributo", "Región"}, {"Valor", "Ventas (Millones)"}}),
+    #"Valor reemplazado" = Table.ReplaceValue(#"Columnas con nombre cambiado","Ventas ","",Replacer.ReplaceText,{"Región"}),
+    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado","NA","Norteamérica",Replacer.ReplaceText,{"Región"}),
+    #"Valor reemplazado2" = Table.ReplaceValue(#"Valor reemplazado1","EU","Europa",Replacer.ReplaceText,{"Región"}),
+    #"Valor reemplazado3" = Table.ReplaceValue(#"Valor reemplazado2","JP","Japón",Replacer.ReplaceText,{"Región"})
+in
+    #"Valor reemplazado3"
+    
